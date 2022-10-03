@@ -29,6 +29,7 @@ These are here to help provide as close to real world casino blackjack as possib
 # Game Play
 * The game client simulates a simple terminal. Although you can code any type of client. 
 * The client calles the API with no ID or COMMAND and the game begins.
+* Then we loop thrugh the game by posting, returning the gameresult and displaying, and repeating. 
 
 
  
