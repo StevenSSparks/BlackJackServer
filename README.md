@@ -1,4 +1,4 @@
-# BlackJackServer API and Client Project 
+# BlackJack Server: API and Client Project 
 Developer by: Steve Sparks - https://github.com/StevenSSparks
 
 ## Project Overview
