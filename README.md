@@ -14,7 +14,7 @@ These are here to help provide as close to real world casino blackjack as possib
 * Supports INSURANCE
 * Currently can not split hands but that feature is next. 
 
-#BlackJack House Rules
+# BlackJack House Rules
 * The cards are delt alternating between the one player and the computer.
 * If the player gets a face card and an ACE on the deal they win.
 * The computer cards are shared first one face down and second face up
