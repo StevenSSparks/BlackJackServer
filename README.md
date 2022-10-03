@@ -1,5 +1,5 @@
 # BlackJack Server: API and Client Project 
-Developer by: Steve Sparks - https://github.com/StevenSSparks
+### Developed by: Steve Sparks - https://github.com/StevenSSparks
 
 ## Project Overview
 This is a .NET 6 WebAPI project that utilizes a custom blackjack service to implement playing BlackJack over an API. A simple client calles the POST endpoint passing in a gameid and a move. When the gameID and move are blank the API will return the details to begin a new game. The games are manaaged inside the API using a unique GUID for each game. The Games have a life of 8 hours.
