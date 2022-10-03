@@ -1,0 +1,15 @@
+﻿@using BlackJackServer.Models;
+@{
+    Layout = "_PlayLayout.cshtml";
+}
+@model BlackJackMoveResult
+
+<div>
+<div>
+    <form name="commandprocessor" action="/game/play/@Model.GameId" method="Post">
+        [Press Enter to Play BlackJack]<input name="command" type="text" autofocus autocomplete="on" />
+    </form>
+
+
+
+</div>

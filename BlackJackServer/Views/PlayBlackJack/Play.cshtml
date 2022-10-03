@@ -1,0 +1,118 @@
+﻿@using BlackJackServer.Models;
+@{
+    Layout = "_PlayLayout.cshtml";
+}
+@model BlackJackMoveResult
+<div>
+    <hr />
+    <h4>Black Jack</h4>
+    <style>
+        table,
+        th,
+        td {
+            padding: 10px;
+            border: 1px solid green;
+            border-collapse: collapse;
+        }
+    </style>
+
+
+
+        <table>
+            <tbody>
+                <tr>
+                    <td>House Wins</td>
+                    <td>@Model.ComputerWins</td>
+                    <td>Player Points</td>
+                    <td>@Model.PlayerPoints</td>
+                </tr>
+                <tr>
+                    <td>Player Wins: </td>
+                    <td>@Model.PlayerWins</td>
+                    <td>Player Bet: </td>
+                    <td>@Model.PlayerCardBet</td>
+                </tr>
+            </tbody>
+        </table>
+</div>
+    @if (Model.PlayerCards.Count > 0)
+    {
+    <div>
+        <br/>
+
+        <table>
+            <tbody>
+                <tr>
+                    <td>House Cards</td>
+                    <td>Total: @Model.ComputerCardTotal</td>
+                </tr>
+            </tbody>
+        </table>
+        <ul style ="list-style-type:none;">
+            @foreach (Card c in Model.ComputerCards)
+            {
+                <li>@c.Name</li>
+            }
+        </ul>
+        <table>
+            <tbody>
+                <tr>
+                    <td>Player Cards</td>
+                    <td>Total: @Model.PlayerCardTotal</td>
+                </tr>
+            </tbody>
+        </table>
+        <p>
+            <ul style="list-style-type:none;">
+                @foreach (Card c in Model.PlayerCards)
+                {
+                    <li>@c.Name</li>
+                }
+            </ul>
+       
+        </p>
+        @if (Model.PlayerSplitCards.Count > 0)
+        {
+            <table>
+                <tbody>
+                    <tr>
+                        <td>Player Split</td>
+                        <td>Total: @Model.PlayerSplotTotal</td>
+                    </tr>
+                </tbody>
+            </table>
+            <p>
+                <ul style="list-style-type:none;">
+                    @foreach (Card c in Model.PlayerSplitCards)
+                    {
+                        <li>@c.Name</li>
+                    }
+                </ul>
+            </p>
+            <table>
+                <tbody>
+                    <tr>
+                        <td>Bet: </td>
+                        <td>@Model.PlayerSplitBet.ToString()</td>
+                    </tr>
+                </tbody>
+            </table>
+        }
+
+    </div>
+}
+<div>
+        <ul style="list-style-type:circle;">
+                @foreach (string s in Model.Message)
+                {
+                    <li>@s</li>
+                }
+            </ul>
+</div>
+
+<div>
+    <p style="font-size:small">Possible Commands are @Model.ComamndList</p>
+    <form name="commandprocessor" action="/game/play/@Model.GameId" method="Post">
+        <p style="font-size:small">Enter Command: <input name="command" type="text" autofocus autocomplete="on" /></p>
+    </form>
+</div>

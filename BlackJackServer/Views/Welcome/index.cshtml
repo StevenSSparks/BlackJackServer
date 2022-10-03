@@ -1,0 +1,78 @@
+﻿
+@*
+    model BlackJackServer.Models.WelcomeVM;
+*@
+@{
+}
+<! DOCTYPE HTML>
+<html>
+    <body style="color:green background-color:black;">
+        <div>
+            <p>
+                <table>
+                    <tbody>
+                        <tr>
+                            <td COLSPAN="2"> <h4>BLACKJACK API!</h4></td>
+                        </tr>
+                        <tr>
+                            <td COLSPAN="2">Version: @Model.AppVersion</td>
+                        </tr>
+
+                        <tr>
+                            <td COLSPAN="2"> Check out the <a href="/swagger/">API Documentation</a></td>
+                        </tr>
+
+                        <tr>
+                            <td COLSPAN="2">Developed by: <strong>@Model.Developer</strong></td>
+                        </tr>
+                       
+                    </tbody>
+                </table>
+
+            </p>
+        </div>
+        <div>
+            <p>Welcome to the world of API's and playing a simple BlackJack Game!
+                <ul>
+                    <li>This API has a simple built in client for the game. </li>
+                    <li>The API can be used to play on any platform.</li>
+                    <li>The client logic is simple</li>
+                        <ul>
+                            <li>Call the POST endpoint and the game starts. </li>
+                            <li>Post each time the player submits a command. </li>
+                            <li>The API POST method expects a simple game move object that contains the game ID and the platyers move</li>
+                            <li>The API then returns a move result object you can use to display the game state.</li>
+                        </ul>
+                 </ul>
+            </p>
+            <br />
+        </div>
+
+        <div>
+            <table>
+                <tbody>
+                    <tr>
+                        <td><img width="40" src="~/img/cards/ace_of_spades.png" /></td>
+                        <td><img width="40" src="~/img/cards/jack_of_clubs2.png" /></td>
+                    </tr>
+                    <tr>
+                        <td COLSPAN="2">
+                            <form name="commandprocessor" action="/game/play/00000000" method="Post">
+                                <input type="submit" value="Click here Win" />
+                            </form>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+        <hr />
+        <div>
+            <p>
+                <ul>
+                   <li><>Check out the <i> <a href="/swagger/">API Documentation</a> </i></li>
+                   <li><>Source on GitHub:</></li>
+                </ul>
+            </p>     
+        </div>
+    </body>
+</html>
