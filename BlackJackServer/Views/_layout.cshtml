@@ -1,0 +1,40 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+    <link href="~/css/DarkLightToggle.css" rel="stylesheet" />
+</head>
+<body>
+<div>
+@RenderBody()
+<hr />
+<footer>
+            <div>
+                <p>
+                    <ul style="font-size:xx-small">
+                        <li style = "font-size:xx-small" >Developed by <strong>Steve Sparks</strong></li>
+                        <li style = "font-size:xx-small">Check out the <a href="/swagger/">API Documentation</a></li>
+                        <li style = "font-size:xx-small" >Source <a href="https://github.com/StevenSSparks/BlackJackServer">GitHub Repo</a></li>
+                    </ul>
+       
+                <button style ="font-size:xx-small"  class="btn-toggle">Toggle Dark Mode</button>
+            </div>
+
+    
+</footer>
+</div>
+    <script id="rendered-js">
+        const btn = document.querySelector(".btn-toggle");
+        const prefersDarkScheme = window.matchMedia("(prefers-color-scheme: light)");
+
+        btn.addEventListener("click", function () {
+            if (prefersDarkScheme.matches) {
+                document.body.classList.toggle("light-theme");
+            } else {
+                document.body.classList.toggle("dark-theme");
+            }
+        });
+                //# sourceURL=pen.js
+    </script>
+
+</body>
+</html>

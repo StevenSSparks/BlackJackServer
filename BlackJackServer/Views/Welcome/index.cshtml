@@ -1,78 +1,89 @@
-﻿
-@*
-    model BlackJackServer.Models.WelcomeVM;
-*@
-@{
-}
-<! DOCTYPE HTML>
-<html>
-    <body style="color:green background-color:black;">
+﻿@using BlackJackServer.Models;
+@model WelcomeVM;
+@{ Layout = "/Views/_layout.cshtml"; }
+
+<div>
+    <img width="200" src="~/img/99-997123_blackjack-casino-logo.png" /> <br/>                     
+    Version: @Model.AppVersion<br />
+    Developed by: <strong>@Model.Developer</strong> <br />
+</div>
+
+<div>
+    <h4>Overview</h4>
+        <p>
+            The purpose of this API is to act as a demo project that members of my team use to practice 
+            various development and DevOps Activities. It is much more fun to get to the end of the coding 
+            project or, even worse, a deployment and CICD build-out, and it has something fun to do at the end.<br /> <br />
+
+            This API is also very usable for the foundation of your own BlackJack game. My goal is an original 
+            game following well-accepted rules. I have not introduced the ability to split a hand (yet), but the 
+            gameplay and the API have many fun features.<br /> <br />
+
+            You can play the game using a client I have implemented or you can implment your own client. Scroll down
+            to see the game commands and the game rules<br /><br /> 
+        </p>
         <div>
-            <p>
-                <table>
-                    <tbody>
-                        <tr>
-                            <td COLSPAN="2"> <h4>BLACKJACK API!</h4></td>
-                        </tr>
-                        <tr>
-                            <td COLSPAN="2">Version: @Model.AppVersion</td>
-                        </tr>
-
-                        <tr>
-                            <td COLSPAN="2"> Check out the <a href="/swagger/">API Documentation</a></td>
-                        </tr>
-
-                        <tr>
-                            <td COLSPAN="2">Developed by: <strong>@Model.Developer</strong></td>
-                        </tr>
-                       
-                    </tbody>
-                </table>
-
-            </p>
-        </div>
-        <div>
-            <p>Welcome to the world of API's and playing a simple BlackJack Game!
-                <ul>
-                    <li>This API has a simple built in client for the game. </li>
-                    <li>The API can be used to play on any platform.</li>
-                    <li>The client logic is simple</li>
-                        <ul>
-                            <li>Call the POST endpoint and the game starts. </li>
-                            <li>Post each time the player submits a command. </li>
-                            <li>The API POST method expects a simple game move object that contains the game ID and the platyers move</li>
-                            <li>The API then returns a move result object you can use to display the game state.</li>
-                        </ul>
-                 </ul>
-            </p>
-            <br />
+         <form name="commandprocessor" action="/game/play/00000000" method="Post">
+            <input type="submit" value=" Play BlackJack " />
+         </form>
         </div>
 
-        <div>
-            <table>
-                <tbody>
-                    <tr>
-                        <td><img width="40" src="~/img/cards/ace_of_spades.png" /></td>
-                        <td><img width="40" src="~/img/cards/jack_of_clubs2.png" /></td>
-                    </tr>
-                    <tr>
-                        <td COLSPAN="2">
-                            <form name="commandprocessor" action="/game/play/00000000" method="Post">
-                                <input type="submit" value="Click here Win" />
-                            </form>
-                        </td>
-                    </tr>
-                </tbody>
-            </table>
-        </div>
-        <hr />
-        <div>
-            <p>
-                <ul>
-                   <li><>Check out the <i> <a href="/swagger/">API Documentation</a> </i></li>
-                   <li><>Source on GitHub:</></li>
-                </ul>
-            </p>     
-        </div>
-    </body>
-</html>
+     <h5>Implementing a Client for the API</h5>
+        <p>
+            You can post an empty game move to the /game/play/ endpoint, and the API will start a new game and return 
+            the new game results. The client that calls the /game/play/{id} endpoint will continue to get the game results 
+            for the unique game id for each move posted. The API caches the game for 8 hours and lets you play until
+            the cache expires or you rest the game. The API can be used to play on any platform calling the API or you can 
+            use the srrvice in the source application to create a standalone game.<br />
+       
+
+        <ul>
+            <li>Call the POST endpoint and the game starts </li>
+            <li>Post each time the player submits a command. </li>
+            <li>The API POST method expects a simple game move object that contains the game ID and the platyer move</li>
+            <li>The API then returns a move result object you can use to display the game state.</li>
+        </ul>
+    </p>
+    <br />
+</div>
+<div>
+<h4>House Rules:</h4>
+    <p>
+        I have implemented a single-deck version of Blackjack. When the game begins, the cards are turned round-robin style and removed from the deck. Then, the deck is shuffled when the last card is used, and the play continues.
+        <ul>
+            <li>The deck is 52 cards w/o Jokers.</li>
+            <li>The deck will shuffle when the last card is used.</li>
+            <li>House draws on 16 or less and stands on 17.</li>
+            <li>Insurance requires enough points for equal bets.</li>
+            <li>Double requires enough points remaining to double.</li>
+            <li>BlackJack pays 3 x points. (Bet 100 win 300)</li>
+            <li>The player receives 10000 points. Each new play session.</li>
+            <li>The Minimum Best is 100 points.</li>
+            <li>Beat the house when the player exceeds 50000 points.</li>
+            <li>When a player has 0 points, the house wins.</li>
+        </ul>
+
+    </p>
+</div>
+
+<div>
+<h4>Game Commands:</h4>
+    <p>
+        <ul>
+            <li>HELP: Displays this list of commands. </li>
+            <li>BET[#]: Bets 100 or the number specified. </li>
+            <li>DOUBLE: Doubles your bet and then STANDS your hand.</li>
+            <li>HIT: Deal a card and continue to play.</li>
+            <li>INS: Purchases insurance and stands on the current hand.</li>
+            <li>RULES: Provides a list of the rules.</li>
+            <li>RESET: Restarts the game and resets player and points.</li>
+            <li>STAND: The player has completed the play.</li>
+        </ul>
+    </p>
+</div>
+
+<div>
+    <form name="commandprocessor" action="/game/play/00000000" method="Post">
+        <input type="submit" value=" Play BlackJack " />
+    </form>
+</div>

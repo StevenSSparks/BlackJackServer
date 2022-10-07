@@ -3,7 +3,6 @@ using BlackJackServer.Models;
 using BlackJackServer.Services;
 using Microsoft.AspNetCore.Cors;
 using Microsoft.AspNetCore.Mvc;
-using MyAPIFortune.Models;
 
 namespace BlackJackServer.Controllers
 {

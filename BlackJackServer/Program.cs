@@ -1,7 +1,6 @@
 using BlackJackServer.Interfaces;
 using BlackJackServer.Models;
 using BlackJackServer.Services;
-using Microsoft.Extensions.Configuration;
 using Microsoft.OpenApi.Models;
 
 var builder = WebApplication.CreateBuilder(args);
