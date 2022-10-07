@@ -15,18 +15,14 @@ build_property.GenerateRazorMetadataSourceChecksumAttributes =
 build_property.MSBuildProjectDirectory = C:\Users\stevesparks\source\repos\BlackJackServer\BlackJackServer
 build_property._RazorSourceGeneratorDebug = 
 
-[C:/Users/stevesparks/source/repos/BlackJackServer/BlackJackServer/Views/PlayBlackJack/index.cshtml]
-build_metadata.AdditionalFiles.TargetPath = Vmlld3NcUGxheUJsYWNrSmFja1xpbmRleC5jc2h0bWw=
-build_metadata.AdditionalFiles.CssScope = 
-
-[C:/Users/stevesparks/source/repos/BlackJackServer/BlackJackServer/Views/PlayBlackJack/Play.cshtml]
-build_metadata.AdditionalFiles.TargetPath = Vmlld3NcUGxheUJsYWNrSmFja1xQbGF5LmNzaHRtbA==
-build_metadata.AdditionalFiles.CssScope = 
-
-[C:/Users/stevesparks/source/repos/BlackJackServer/BlackJackServer/Views/PlayBlackJack/_PlayLayout.cshtml]
-build_metadata.AdditionalFiles.TargetPath = Vmlld3NcUGxheUJsYWNrSmFja1xfUGxheUxheW91dC5jc2h0bWw=
+[C:/Users/stevesparks/source/repos/BlackJackServer/BlackJackServer/Views/PlayBlackJack/play.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcUGxheUJsYWNrSmFja1xwbGF5LmNzaHRtbA==
 build_metadata.AdditionalFiles.CssScope = 
 
 [C:/Users/stevesparks/source/repos/BlackJackServer/BlackJackServer/Views/Welcome/index.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcV2VsY29tZVxpbmRleC5jc2h0bWw=
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/stevesparks/source/repos/BlackJackServer/BlackJackServer/Views/_layout.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcX2xheW91dC5jc2h0bWw=
 build_metadata.AdditionalFiles.CssScope = 

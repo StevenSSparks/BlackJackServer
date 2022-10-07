@@ -1,4 +1,4 @@
-﻿namespace MyAPIFortune.Models
+﻿namespace BlackJackServer.Models
 {
     public class WelcomeVM
     {

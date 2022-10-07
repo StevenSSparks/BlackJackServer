@@ -1,6 +1,6 @@
 {
   "Version": 1,
-  "Hash": "rrJnmLNd+ea/rnN+jOltrl/G/RYBjTKe7Jq5pXRiutg=",
+  "Hash": "h4Ci03TzlztQZBSXdDMbf9Jg1waSFlEHs0KmexWK+TM=",
   "Source": "BlackJackServer",
   "BasePath": "_content/BlackJackServer",
   "Mode": "Default",
@@ -34,12 +34,12 @@
       "OriginalItemSpec": "wwwroot\\css\\DarkLightToggle.css"
     },
     {
-      "Identity": "C:\\Users\\stevesparks\\source\\repos\\BlackJackServer\\BlackJackServer\\wwwroot\\css\\terminal.css",
+      "Identity": "C:\\Users\\stevesparks\\source\\repos\\BlackJackServer\\BlackJackServer\\wwwroot\\img\\99-997123_blackjack-casino-logo.png",
       "SourceId": "BlackJackServer",
       "SourceType": "Discovered",
       "ContentRoot": "C:\\Users\\stevesparks\\source\\repos\\BlackJackServer\\BlackJackServer\\wwwroot\\",
       "BasePath": "_content/BlackJackServer",
-      "RelativePath": "css/terminal.css",
+      "RelativePath": "img/99-997123_blackjack-casino-logo.png",
       "AssetKind": "All",
       "AssetMode": "All",
       "AssetRole": "Primary",
@@ -48,7 +48,7 @@
       "AssetTraitValue": "",
       "CopyToOutputDirectory": "Never",
       "CopyToPublishDirectory": "PreserveNewest",
-      "OriginalItemSpec": "wwwroot\\css\\terminal.css"
+      "OriginalItemSpec": "wwwroot\\img\\99-997123_blackjack-casino-logo.png"
     },
     {
       "Identity": "C:\\Users\\stevesparks\\source\\repos\\BlackJackServer\\BlackJackServer\\wwwroot\\img\\cards\\10_of_clubs.png",

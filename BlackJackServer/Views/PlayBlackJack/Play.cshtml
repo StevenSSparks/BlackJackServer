@@ -1,111 +1,66 @@
 ﻿@using BlackJackServer.Models;
 @{
-    Layout = "_PlayLayout.cshtml";
+    Layout = "/Views/_layout.cshtml";
 }
 @model BlackJackMoveResult
 <div>
-    <hr />
-    <h4>Black Jack</h4>
-
+    <img width="100" src="~/img/99-997123_blackjack-casino-logo.png" /> <br /> <br />
         <table>
             <tbody>
                 <tr>
-                    <td>House Wins</td>
-                    <td>@Model.ComputerWins</td>
-                    <td>Player Points</td>
-                    <td>@Model.PlayerPoints</td>
+                    <td align="left">House Wins: @Model.ComputerWins </td>
+                    <td>Player Points: @Model.PlayerPoints</td>
                 </tr>
                 <tr>
-                    <td>Player Wins: </td>
-                    <td>@Model.PlayerWins</td>
-                    <td>Player Bet: </td>
-                    <td>@Model.PlayerCardBet</td>
+                    <td>Player Wins: @Model.PlayerWins</td>
+                    <td>Player Bet: @Model.PlayerCardBet </td>
                 </tr>
             </tbody>
         </table>
 </div>
+
+<div>
     @if (Model.PlayerCards.Count > 0)
     {
-    <div>
-        <br>
-        <table>
-            <tbody>
-                <tr>
-                    @foreach (Card c in Model.ComputerCards) 
-                    {
-                        <td><img width="80" src="~/img/cards/@(c.Name.Replace(" ", "_").ToLower()).png" /></td>
-                    }
-                </tr>
-            </tbody>
-        </table>
-        <p>
+            <br>
             <table>
+                <thead>
+                    <th COLSPAN="2" > House Cards Total: @Model.ComputerCardTotal </th>
+                </thead>
                 <tbody>
                     <tr>
-                        <td>House Cards</td>
-                        <td>Total: @Model.ComputerCardTotal</td>
+                        @foreach (Card c in Model.ComputerCards) 
+                        {
+                            <td><img width="80" src="~/img/cards/@(c.Name.Replace(" ", "_").ToLower()).png" /></td>
+                        }
                     </tr>
                 </tbody>
             </table>
-        </p>
-        <br/>
-        <table>
-            <tbody>
-                <tr>
-                    @foreach (Card c in Model.PlayerCards)
-                    {
-                        <td><img width="80" src="~/img/cards/@(c.Name.Replace(" ", "_").ToLower()).png" /></td>
-                    }
-                </tr>
-            </tbody>
-        </table>
-        <p>
-        <table>
-            <tbody>
-                <tr>
-                    <td>Player Cards</td>
-                    <td>Total: @Model.PlayerCardTotal</td>
-                </tr>
-            </tbody>
-        </table>
-        </p>
-        @if (Model.PlayerSplitCards.Count > 0)
-        {
-            <table>
-                <tbody>
-                    <tr>
-                        <td>Player Split</td>
-                        <td>Total: @Model.PlayerSplotTotal</td>
-                    </tr>
-                </tbody>
-            </table>
-            <p>
-                <ul style="list-style-type:none;">
-                    @foreach (Card c in Model.PlayerSplitCards)
-                    {
-                        <li>@c.Name</li>
-                    }
-                </ul>
-            </p>
-            <table>
-                <tbody>
-                    <tr>
-                        <td>Bet: </td>
-                        <td>@Model.PlayerSplitBet.ToString()</td>
-                    </tr>
-                </tbody>
-            </table>
-        }
+            <br/>
 
-    </div>
-}
+            <table>
+                 <thead>
+                    <th COLSPAN="2" > Player Cards, Total: @Model.PlayerCardTotal</th>
+                </thead>
+                <tbody>
+                    <tr>
+                        @foreach (Card c in Model.PlayerCards)
+                        {
+                            <td><img width="80" src="~/img/cards/@(c.Name.Replace(" ", "_").ToLower()).png" /></td>
+                        }
+                    </tr>
+                </tbody>
+            </table>
+     }
+</div>
+
 <div>
         <ul style="list-style-type:circle;">
-                @foreach (string s in Model.Message)
-                {
-                    <li>@s</li>
-                }
-            </ul>
+            @foreach (string s in Model.Message)
+            {
+                <li>@s</li>
+            }
+        </ul>
 </div>
 
 <div>

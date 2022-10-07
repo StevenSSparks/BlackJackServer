@@ -24,6 +24,7 @@ namespace BlackJackServer.Services
         }
 
         #region CachingMethods
+
         private void Cache_AddGame(BlackJackGame g)
         {
             var cacheEntryOptions = new MemoryCacheEntryOptions()
@@ -74,23 +75,25 @@ namespace BlackJackServer.Services
 
         #endregion CachingMethiods
 
+        #region Player Help and Rules 
+
         public List<string> HouseRules()
         {
             List<string> message = new()
             {
-                "Welcome to the BlackJack Server",
                 "House Rules:",
-                "Deck is 52 cards w/o Jokers and shuffles when last card is used.",
+                "Deck is 52 cards w/o Jokers.",
+                "The deck will shuffle when the last card is used.",
                 "House draws on 16 or less and stands on 17.",
                 "Insurance requires enough points for equal bets.",
+                "Double requires enough points remaining to double.",
                 //"Splits and Insurance require enough points for equal bets",
                 //"Splits are allowed when player gets on any card of same value.",
-                "BlackJack pays 3 x points bet.",
-                "Player receives 10000 points. Each new play session",
+                "BlackJack pays 3 x points. (Bet 100 win 300)",
+                "The player receives 10000 points. Each new play session.",
                 "Minimum Best is 100 points.",
-                "When a player exceeded 50000 points the house is bankrupt and player wins.",
-                "When a player has 0 points the player is bankrupt and house wins.",
-                "Double requires enough points remaining to double."
+                "Beat the house when the player exceeds 50000 points.",
+                "When a player has 0 points, the house wins."
             };
 
             return message;
@@ -103,12 +106,11 @@ namespace BlackJackServer.Services
                 "Server Commands:",
                 "Some commands are only valid at certian times during the game.",
                 "HELP   : Dispalys this list of commands.",
-                "BET #  : Bets 100 or # of points and starts a hand.",
+                "BET[#] : Bets 100 or the number specified.",
                 "DOUBLE : Doubles your bet and then STANDS your hand",
-                "HIT    : Deal a card for Hand in play.",
+                "HIT    : Deal a card for hand in play.",
                 "INS    : Purchases insurance and stand on current hand.",
                 "RULES  : Provides a list of the rules.",
-                "SPLIT  : Splits hand and bets equal amount on second hand.",
                 "RESET  : Restarts the game and resets player and points.",
                 "STAND  : Player lets computer finish the game on main hand."
             };
@@ -116,6 +118,7 @@ namespace BlackJackServer.Services
             return message;
         }
 
+        #endregion Player Help and Rules 
 
         public BlackJackMoveResult PlayBlackJack(GameMove move)
         {
@@ -196,6 +199,8 @@ namespace BlackJackServer.Services
         // Note - When you deal the next card if you run out of cards the deck reset needs to remove the cards in the players and computers hands from the deck
         // Get the new deck and then use linq to remove the card by Id. 
 
+        #region Game Moves
+
         private BlackJackGame ProcessMove(BlackJackGame game)
         {
           
@@ -273,7 +278,6 @@ namespace BlackJackServer.Services
 
             return game;
         }
-
 
         private BlackJackGame GameMoveBet(BlackJackGame game)
         {
@@ -451,6 +455,8 @@ namespace BlackJackServer.Services
             game = newgame;
             return game;
         }
+
+        #endregion Game Moves
 
 
         private bool HasBlackJack(List<Card> cards)
