@@ -6,17 +6,6 @@
 <div>
     <hr />
     <h4>Black Jack</h4>
-    <style>
-        table,
-        th,
-        td {
-            padding: 10px;
-            border: 1px solid green;
-            border-collapse: collapse;
-        }
-    </style>
-
-
 
         <table>
             <tbody>
@@ -38,22 +27,39 @@
     @if (Model.PlayerCards.Count > 0)
     {
     <div>
-        <br/>
-
+        <br>
         <table>
             <tbody>
                 <tr>
-                    <td>House Cards</td>
-                    <td>Total: @Model.ComputerCardTotal</td>
+                    @foreach (Card c in Model.ComputerCards) 
+                    {
+                        <td><img width="80" src="~/img/cards/@(c.Name.Replace(" ", "_").ToLower()).png" /></td>
+                    }
                 </tr>
             </tbody>
         </table>
-        <ul style ="list-style-type:none;">
-            @foreach (Card c in Model.ComputerCards)
-            {
-                <li>@c.Name</li>
-            }
-        </ul>
+        <p>
+            <table>
+                <tbody>
+                    <tr>
+                        <td>House Cards</td>
+                        <td>Total: @Model.ComputerCardTotal</td>
+                    </tr>
+                </tbody>
+            </table>
+        </p>
+        <br/>
+        <table>
+            <tbody>
+                <tr>
+                    @foreach (Card c in Model.PlayerCards)
+                    {
+                        <td><img width="80" src="~/img/cards/@(c.Name.Replace(" ", "_").ToLower()).png" /></td>
+                    }
+                </tr>
+            </tbody>
+        </table>
+        <p>
         <table>
             <tbody>
                 <tr>
@@ -62,14 +68,6 @@
                 </tr>
             </tbody>
         </table>
-        <p>
-            <ul style="list-style-type:none;">
-                @foreach (Card c in Model.PlayerCards)
-                {
-                    <li>@c.Name</li>
-                }
-            </ul>
-       
         </p>
         @if (Model.PlayerSplitCards.Count > 0)
         {

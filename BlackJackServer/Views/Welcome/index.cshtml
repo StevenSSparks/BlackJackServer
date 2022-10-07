@@ -4,9 +4,42 @@
 *@
 @{
 }
-<! DOCTYPE HTML>
+
+
 <html>
-    <body style="color:green background-color:black;">
+<style>
+
+    body {
+        --text-color: #eee;
+        --bkg-color: #121212;
+    }
+
+    body.light-theme {
+        --text-color: #222;
+        --bkg-color: #fff;
+    }
+
+    * {
+        font-family: Arial, Helvetica, sans-serif;
+    }
+
+    body {
+        background: var(--bkg-color);
+    }
+
+    ul,
+    table,
+    h1,
+    p {
+        color: var(--text-color);
+    }
+
+</style>
+
+
+
+
+<body>
         <div>
             <p>
                 <table>
@@ -66,13 +99,34 @@
             </table>
         </div>
         <hr />
+
         <div>
+        <button class="btn-toggle">Toggle Dark Mode</button>
             <p>
                 <ul>
-                   <li><>Check out the <i> <a href="/swagger/">API Documentation</a> </i></li>
-                   <li><>Source on GitHub:</></li>
+                   <li>Check out the <i> <a href="/swagger/">API Documentation</a> </i></li>
+                   <li>Source on GitHub:</></li>
                 </ul>
             </p>     
         </div>
+
+
+
+    <script id="rendered-js">
+        const btn = document.querySelector(".btn-toggle");
+        const prefersDarkScheme = window.matchMedia("(prefers-color-scheme: light)");
+
+        btn.addEventListener("click", function () {
+            if (prefersDarkScheme.matches) {
+                document.body.classList.toggle("light-theme");
+            } else {
+                document.body.classList.toggle("dark-theme");
+            }
+        });
+        //# sourceURL=pen.js
+    </script>
+
+
+
     </body>
 </html>

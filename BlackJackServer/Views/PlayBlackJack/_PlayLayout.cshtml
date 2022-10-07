@@ -1,8 +1,7 @@
 ﻿<!DOCTYPE html>
 <html>
 <head>
-    <link href="~/css/terminal.css" rel="stylesheet" />
-    <title>Play BlackJack</title>
+    <link href="~/css/DarkLightToggle.css" rel="stylesheet" />
 </head>
 <body>
 <div>
@@ -13,6 +12,20 @@
 </footer>
 </div>
 
+    <button class="btn-toggle">Toggle Dark Mode</button>
+    <script id="rendered-js">
+        const btn = document.querySelector(".btn-toggle");
+        const prefersDarkScheme = window.matchMedia("(prefers-color-scheme: light)");
+
+        btn.addEventListener("click", function () {
+            if (prefersDarkScheme.matches) {
+                document.body.classList.toggle("light-theme");
+            } else {
+                document.body.classList.toggle("dark-theme");
+            }
+        });
+                //# sourceURL=pen.js
+    </script>
 
 </body>
 </html>

@@ -64,7 +64,7 @@ namespace BlackJackServer.Services
                 g.Id = tempId;
                 g.PlayerWins = 0;
                 g.ComputerWins = 0;
-                g.Deck = InitCards();
+                g.Deck = ShuffleCards();
 
                 Cache_AddGame(g);
             }
@@ -89,7 +89,8 @@ namespace BlackJackServer.Services
                 "Player receives 10000 points. Each new play session",
                 "Minimum Best is 100 points.",
                 "When a player exceeded 50000 points the house is bankrupt and player wins.",
-                "When a player has 0 points the player is bankrupt and house wins."
+                "When a player has 0 points the player is bankrupt and house wins.",
+                "Double requires enough points remaining to double."
             };
 
             return message;
@@ -101,14 +102,15 @@ namespace BlackJackServer.Services
             {
                 "Server Commands:",
                 "Some commands are only valid at certian times during the game.",
-                "HELP  : Dispalys this list of commands.",
-                "BET # : Bets 100 or # of points and starts a hand.",
-                "HIT   : Deal a card for Hand in play.",
-                "INS   : Purchases insurance and stand on current hand.",
-                "RULES : Provides a list of the rules.",
-                "SPLIT : Splits hand and bets equal amount on second hand.",
-                "RESET : Restarts the game and resets player and points.",
-                "STAND : Player lets computer finish the game on main hand."
+                "HELP   : Dispalys this list of commands.",
+                "BET #  : Bets 100 or # of points and starts a hand.",
+                "DOUBLE : Doubles your bet and then STANDS your hand",
+                "HIT    : Deal a card for Hand in play.",
+                "INS    : Purchases insurance and stand on current hand.",
+                "RULES  : Provides a list of the rules.",
+                "SPLIT  : Splits hand and bets equal amount on second hand.",
+                "RESET  : Restarts the game and resets player and points.",
+                "STAND  : Player lets computer finish the game on main hand."
             };
 
             return message;
@@ -191,7 +193,6 @@ namespace BlackJackServer.Services
         }
 
 
-        //
         // Note - When you deal the next card if you run out of cards the deck reset needs to remove the cards in the players and computers hands from the deck
         // Get the new deck and then use linq to remove the card by Id. 
 
@@ -212,153 +213,27 @@ namespace BlackJackServer.Services
                         break;
                     case "hit":
                         {
-                            if (game.GameActive == true)
-                            {
-                                game.PlayerHasInsurange = false;
-
-                                if (game.PlayerCardsActive)
-                                    {
-                                    (var nextcard, game) = NextCard(game);
-                                    game.PlayerCards.Add(nextcard);
-                                    game.PlayerCardsTotal = CardTotal(game.PlayerCards);
-                                        
-                                    if (game.PlayerCardsTotal == 21) // player wins or push
-                                    {
-
-                                        if (game.ComputerCardsTotal == 21)
-                                        {
-                                            game.ComputerFaceDownCard = false;
-                                            game = PushGame(game);
-                                        }
-                                        else game = PlayerWins(game);
-                                        return game;
-
-                                    }
-
-                                    if (game.PlayerCardsTotal > 21) // player looses
-                                    {
-                                        if (!game.PlayerSplitActive) // if player has split take money and play on
-                                        {
-                                                
-                                            game.Messages.Add($"You bust with a total of {game.PlayerCardsTotal}.");
-                                            game = ComputerWins(game);
-                                            return game;
-
-                                        }
-                                    }
-
-                                    if (game.PlayerCardsTotal < 21) // player is still playing 
-                                    {
-                                        game.Messages.Add("The dealer gives you a new card.");
-                                        game.Messages.Add($"Your new total is {game.PlayerCardsTotal}.");
-                                        
-                                    }
-                                    else
-                                    {
-                                        if (game.PlayerSplitActive == true)
-                                        {
-                                            // swap in the split cards
-                                            game.PlayerCards = game.PlayerSplitCards;
-                                            game.PlayerCardsBet = game.PlayerSplitBet;
-                                            game.PlayerCardsActive = true;
-                                            game.PlayerSplitActive = false;
-                                            game.Messages.Add("You can now play the Split Hand.");
-
-                                        }
-                                        else
-                                        {
-                                            game.GameActive = false;
-                                        }
-
-                                    }
-
-                                }
-                                else game.Messages.Add("Nothing to Hit");
-                                return game;
-                            }
-                            else game.Messages.AddRange(new List<string> { "You can't HIT right now." });
-
+                            game = GameMoveHit(game);
                             return game;
                         }
                     case "ins":
                         {
-                            if (game.PlayerHasInsurange == true)
-                            {
-                                game.PlayerHasInsurange = false;
-                                game.Messages.Add($"Player paid {game.PlayerCardsBet} points for insurance.");
-
-                                if (HasBlackJack(game.ComputerCards))
-                                {
-                                    game.Messages.Add("House has BlackJack!");
-                                    game.PlayerPoints = game.PlayerPoints - game.PlayerCardsBet;
-                                    game = ComputerWins(game);
-                                    return game;
-                                }
-                                else
-                                {
-                                    game.Messages.Add("House does not have BlackJack!");
-                                    game.PlayerPoints = game.PlayerPoints - game.PlayerCardsBet;
-                                    return game;
-                                }
-                            }
-                            else if (game.PlayerHasInsurange == false) game.Messages.Add("INS is not valid right now.");
+                            game = GameMoveInsurance(game);
                             return game;
                         }
                     case "stand":
                         {
-                            game.PlayerHasInsurange = false;
-
-                            if (CardTotal(game.ComputerCards) <= 16) game.Messages.Add($"House has {CardTotal(game.ComputerCards)} must hit till over 16.");
-
-                            while(CardTotal(game.ComputerCards) <=16)
-                            {
-                                (Card c, game) = NextCard(game);
-                                game.ComputerCards.Add(c);
-                                game.Messages.Add($"House hits and receives {c.Name}.");
-                            }
-
-                            var ctotal = CardTotal(game.ComputerCards);
-                            var ptotal = CardTotal(game.PlayerCards);
-
-                            while (game.GameActive)
-                            {
-                                // computer busts
-                                if (ctotal > 21) // draws over 21
-                                {
-                                    game = PlayerWins(game);
-                                    return game;
-                                }
-
-                                if (ptotal > ctotal) // Player has highr cards than the computer. 
-                                {
-                                    game = PlayerWins(game);
-                                    return game;
-                                }
-
-                                if (ctotal == ptotal)
-                                {
-
-                                    game = PushGame(game);
-                                    return game;
-
-                                }
-
-                                if (ctotal > ptotal)
-                                {
-                                    game = ComputerWins(game);
-                                    return game;
-                                }
-
-                                game.Messages.Add("Stand Failed. Not sure why!");
-                                return game; 
-
-                            }
-
-                            game.Messages.Add("STAND is not a valid command right now");
+                            game = GameMoveStand(game);
                             return game;
+                        }
+                    case "double":
+                        {
+                            game = GameMoveDouble(game);
+                            return game; 
                         }
                     case "split":
                         {
+                            game.Messages.Add("Split not implemented yet.");
                             return game;
                         }
                 }
@@ -367,27 +242,15 @@ namespace BlackJackServer.Services
 
             if ((game.Command == "bet") && game.GameActive == false)
             {
-                game = StartHand(game);
-
-                // Checking for Natural BlackJack - If Player has that then Pay Player
-                if (HasBlackJack(game.PlayerCards)) // pay player
-                {
-                    game.Messages = new(); // clear start up messages;
-                    game = PlayerWins(game);
-                    return game;
-                }
-
+                game = GameMoveBet(game);
                 return game;
             }
             else if ((game.Command == "bet")) game.Messages.AddRange(new List<string> { "BET is not valid until the hand is complete." });
 
             if (game.Command == "reset")
             {
-                var newgame = new BlackJackGame();
-                newgame = Cache_PlayGame(newgame);
-                Cache_RemoveGame(game.Id);
-                game = newgame;
-
+                game = GameMoveReset(game);
+                return game; 
             }
 
             if (game.Command == "help")
@@ -408,10 +271,187 @@ namespace BlackJackServer.Services
                 else if (game.Command != "") game.Messages.Add($"{game.Command.ToUpper()} is not a valid command.");
             }
 
-            // game.CommandList = CommandList(game);
+            return game;
+        }
+
+
+        private BlackJackGame GameMoveBet(BlackJackGame game)
+        {
+            game = StartHand(game);
+
+            // Checking for Natural BlackJack - If Player has that then Pay Player
+            if (HasBlackJack(game.PlayerCards)) // pay player
+            {
+                game.Messages = new(); // clear start up messages;
+                game = PlayerWins(game);
+            }
+            return game;
+        }
+
+        private BlackJackGame GameMoveDouble(BlackJackGame game)
+        {
+            var bet = game.PlayerCardsBet;
+
+            if (game.PlayerPoints < game.PlayerCardsBet)
+            {
+                game.Messages.Add("You don't have enough points to double your bet.");
+                game.Messages.Add($"You needed {bet - game.PlayerPoints} points.");
+                return game;
+            }
+
+            game.PlayerCardsBet = game.PlayerCardsBet + bet;
+            game.PlayerPoints = game.PlayerPoints - bet;
+
+            game.Messages.Add($"You doubled your bet from {bet} to {game.PlayerCardsBet}.");
+
+            game = GameMoveStand(game);
 
             return game;
         }
+
+        private BlackJackGame GameMoveHit(BlackJackGame game)
+        {
+            if (game.GameActive == true)
+            {
+                game.PlayerHasInsurange = false;
+
+                if (game.PlayerCardsActive)
+                {
+                    (var nextcard, game) = NextCard(game);
+                    game.PlayerCards.Add(nextcard);
+                    game.PlayerCardsTotal = CardTotal(game.PlayerCards);
+
+                    if (game.PlayerCardsTotal > 21) // player looses
+                    {
+                        if (!game.PlayerSplitActive) // if player has split take money and play on
+                        {
+
+                            game.Messages.Add($"You bust with a total of {game.PlayerCardsTotal}.");
+                            game = ComputerWins(game);
+                            return game;
+
+                        }
+                    }
+
+                    if (game.PlayerCardsTotal <= 21) // player is still playing 
+                    {
+                        game.Messages.Add("The dealer gives you a new card.");
+                        game.Messages.Add($"Your new total is {game.PlayerCardsTotal}.");
+                        if (game.PlayerCardsTotal == 21) game = GameMoveStand(game);
+                    }
+                    else
+                    {
+                        if (game.PlayerSplitActive == true)
+                        {
+                            // swap in the split cards
+                            game.PlayerCards = game.PlayerSplitCards;
+                            game.PlayerCardsBet = game.PlayerSplitBet;
+                            game.PlayerCardsActive = true;
+                            game.PlayerSplitActive = false;
+                            game.Messages.Add("You can now play the Split Hand.");
+
+                        }
+                        else
+                        {
+                            game.GameActive = false;
+                        }
+
+                    }
+
+                }
+                else game.Messages.Add("Nothing to Hit");
+                return game;
+            }
+            else game.Messages.AddRange(new List<string> { "You can't HIT right now." });
+
+            return game;
+        }
+
+        private BlackJackGame GameMoveStand(BlackJackGame game)
+        {
+            game.PlayerHasInsurange = false;
+
+            if (CardTotal(game.ComputerCards) <= 16) game.Messages.Add($"House has {CardTotal(game.ComputerCards)} must hit till over 16.");
+
+            while (CardTotal(game.ComputerCards) <= 16)
+            {
+                (Card c, game) = NextCard(game);
+                game.ComputerCards.Add(c);
+                game.Messages.Add($"House hits and receives {c.Name}.");
+            }
+
+            var ctotal = CardTotal(game.ComputerCards);
+            var ptotal = CardTotal(game.PlayerCards);
+
+            while (game.GameActive)
+            {
+                // computer busts
+                if (ctotal > 21) // draws over 21
+                {
+                    game = PlayerWins(game);
+                    return game;
+                }
+
+                if (ptotal > ctotal) // Player has highr cards than the computer. 
+                {
+                    game = PlayerWins(game);
+                    return game;
+                }
+
+                if (ctotal == ptotal)
+                {
+
+                    game = PushGame(game);
+                    return game;
+
+                }
+
+                if (ctotal > ptotal)
+                {
+                    game = ComputerWins(game);
+                    return game;
+                }
+
+            }
+
+            game.Messages.Add($"{game.Command} is not a valid command right now");
+            return game;
+        }
+
+        private BlackJackGame GameMoveInsurance(BlackJackGame game)
+        {
+            if (game.PlayerHasInsurange == true)
+            {
+                game.PlayerHasInsurange = false;
+                game.Messages.Add($"Player paid {game.PlayerCardsBet} points for insurance.");
+
+                if (HasBlackJack(game.ComputerCards))
+                {
+                    game.Messages.Add("House has BlackJack!");
+                    game.PlayerPoints = game.PlayerPoints - game.PlayerCardsBet;
+                    game = ComputerWins(game);
+                    return game;
+                }
+                else
+                {
+                    game.Messages.Add("House does not have BlackJack!");
+                    game.PlayerPoints = game.PlayerPoints - game.PlayerCardsBet;
+                    return game;
+                }
+            }
+            else if (game.PlayerHasInsurange == false) game.Messages.Add("INS is not valid right now.");
+            return game;
+        }
+
+        public BlackJackGame GameMoveReset(BlackJackGame game)
+        {
+            var newgame = new BlackJackGame();
+            newgame = Cache_PlayGame(newgame);
+            Cache_RemoveGame(game.Id);
+            game = newgame;
+            return game;
+        }
+
 
         private bool HasBlackJack(List<Card> cards)
         {
@@ -428,6 +468,7 @@ namespace BlackJackServer.Services
             return true;
         }
 
+        #region Game State Conditions - Win - Loose - Draw
 
         private BlackJackGame PushGame(BlackJackGame game)
         {
@@ -512,8 +553,10 @@ namespace BlackJackServer.Services
             return game;
         }
 
+        #endregion Game State Conditions - Win - Loose - Draw
 
-        #region Helper Methods
+        #region Game Processing Methods
+
         private int ParseBet(string bet)
         {
             int number = 0;
@@ -550,9 +593,6 @@ namespace BlackJackServer.Services
 
             game.PlayerPoints = game.PlayerPoints - bet;
             return new Tuple<int, BlackJackGame>(bet,game);        }
-
-        #endregion Helper Methods
-
 
         private BlackJackGame StartHand(BlackJackGame game)
         {
@@ -600,9 +640,6 @@ namespace BlackJackServer.Services
 
         }
 
-   
-
-
         private string CommandList(BlackJackGame game)
         {
             var commandList = new List<string>();
@@ -632,6 +669,7 @@ namespace BlackJackServer.Services
                 commandList.Add("HIT");
                 commandList.Add("STAND");
                 commandList.Add("RESET");
+                commandList.Add("DOUBLE");
 
                 //if (game.PlayerCards.Count == 2)
                 //{
@@ -666,7 +704,6 @@ namespace BlackJackServer.Services
 
             return commands;
         }
-
 
         private static List<Card> ComputerCardsList(BlackJackGame game)
         {
@@ -710,14 +747,13 @@ namespace BlackJackServer.Services
             return total;
         }
 
-
         private Tuple<Card, BlackJackGame> NextCard(BlackJackGame game)
         {
   
             if (game.Deck.Count == 0)
             {
                 List<Card> NewDeck = new();
-                NewDeck = InitCards();
+                NewDeck = ShuffleCards();
 
                 // clear out the active cards from the new deck
                 foreach (Card card in game.PlayerCards)
@@ -736,25 +772,10 @@ namespace BlackJackServer.Services
             return new Tuple<Card, BlackJackGame>(c, game);
         }
 
+        #endregion Game Processing Methods
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-        private List<Card> InitCards()
+        private List<Card> ShuffleCards()
         {
             List<Card> Deck = new()
             {
@@ -827,9 +848,6 @@ namespace BlackJackServer.Services
             return ShuffeledDeck;
 
         }
-
-
-
 
     }
 }
