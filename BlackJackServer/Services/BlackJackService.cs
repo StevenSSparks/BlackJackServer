@@ -317,7 +317,9 @@ namespace BlackJackServer.Services
 
             game.Messages.Add($"You doubled your bet from {bet} to {game.PlayerCardsBet}.");
 
-            game = GameMoveStand(game);
+            game = GameMoveHit(game);
+
+            if (CardTotal(game.PlayerCards) < 21) game = GameMoveStand(game);
 
             return game;
         }
@@ -338,7 +340,7 @@ namespace BlackJackServer.Services
                     {
                         if (!game.PlayerSplitActive) // if player has split take money and play on
                         {
-
+                            game.Messages.Add($"The dealer gives you the {nextcard.Name}.");
                             game.Messages.Add($"You bust with a total of {game.PlayerCardsTotal}.");
                             game = ComputerWins(game);
                             return game;
@@ -348,7 +350,7 @@ namespace BlackJackServer.Services
 
                     if (game.PlayerCardsTotal <= 21) // player is still playing 
                     {
-                        game.Messages.Add("The dealer gives you a new card.");
+                        game.Messages.Add($"The dealer gives you the {nextcard.Name}.");
                         game.Messages.Add($"Your new total is {game.PlayerCardsTotal}.");
                         if (game.PlayerCardsTotal == 21) game = GameMoveStand(game);
                     }
@@ -521,7 +523,7 @@ namespace BlackJackServer.Services
             else
             {
                 game.PlayerPoints = game.PlayerPoints + (game.PlayerCardsBet * 2);
-                game.Messages.Add($"Player Win! Points Payout of {game.PlayerCardsBet * 2} added to player points!");
+                game.Messages.Add($"Player Wins! Points Payout of {game.PlayerCardsBet * 2} added to player points!");
             }
 
             if (game.PlayerSplitActive = true && HasBlackJack(game.PlayerSplitCards))
@@ -553,7 +555,7 @@ namespace BlackJackServer.Services
         private BlackJackGame ComputerWins(BlackJackGame game)
         {
 
-            game.Messages.Add("House Wins");
+            game.Messages.Add($"House Wins with a total of {CardTotal(game.ComputerCards)}");
             game.ComputerWins = game.ComputerWins + 1;
 
             game.PlayerCardsActive = false;
