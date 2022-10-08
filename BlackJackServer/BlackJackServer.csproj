@@ -4,13 +4,32 @@
     <TargetFramework>net6.0</TargetFramework>
     <Nullable>enable</Nullable>
     <ImplicitUsings>enable</ImplicitUsings>
+    <Version>$(Versionprefix)</Version>
+    <Copyright>Steven S. Sparks</Copyright>
+    <PackageProjectUrl>https://github.com/StevenSSparks/BlackJackServer</PackageProjectUrl>
+    <RepositoryUrl>https://github.com/StevenSSparks/BlackJackServer</RepositoryUrl>
+    <PackageReadmeFile>README.md</PackageReadmeFile>
+    <RepositoryType>git</RepositoryType>
+    <Company>Steven S. Sparks</Company>
+    <Description>API for playing backjack and sample client to use the API</Description>
+    <AssemblyVersion>0.0.1 beta</AssemblyVersion>
   </PropertyGroup>
+
+  <ItemGroup>
+    <None Include="..\..\..\BootCamp2\dra-dbapitofile1\README.md">
+      <Pack>True</Pack>
+      <PackagePath>\</PackagePath>
+    </None>
+  </ItemGroup>
 
   <ItemGroup>
     <PackageReference Include="Swashbuckle.AspNetCore" Version="6.2.3" />
   </ItemGroup>
 
   <ItemGroup>
+    <Content Update="wwwroot\img\99-997123_blackjack-casino-logo.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
     <Content Update="wwwroot\img\cards\10_of_clubs.png">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>

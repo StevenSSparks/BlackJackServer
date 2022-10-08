@@ -1,6 +1,6 @@
 {
   "Version": 1,
-  "Hash": "h4Ci03TzlztQZBSXdDMbf9Jg1waSFlEHs0KmexWK+TM=",
+  "Hash": "dZ9SMBqR1K6h4DGQbhZ6VNjpyBxAe2XfaVtPes8+ZW0=",
   "Source": "BlackJackServer",
   "BasePath": "_content/BlackJackServer",
   "Mode": "Default",
@@ -46,7 +46,7 @@
       "RelatedAsset": "",
       "AssetTraitName": "",
       "AssetTraitValue": "",
-      "CopyToOutputDirectory": "Never",
+      "CopyToOutputDirectory": "Always",
       "CopyToPublishDirectory": "PreserveNewest",
       "OriginalItemSpec": "wwwroot\\img\\99-997123_blackjack-casino-logo.png"
     },
