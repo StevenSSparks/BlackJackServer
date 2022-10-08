@@ -95,3 +95,4 @@ C:\Users\stevesparks\source\repos\BlackJackServer\BlackJackServer\obj\Debug\net6
 C:\Users\stevesparks\source\repos\BlackJackServer\BlackJackServer\obj\Debug\net6.0\BlackJackServer.pdb
 C:\Users\stevesparks\source\repos\BlackJackServer\BlackJackServer\obj\Debug\net6.0\BlackJackServer.genruntimeconfig.cache
 C:\Users\stevesparks\source\repos\BlackJackServer\BlackJackServer\obj\Debug\net6.0\ref\BlackJackServer.dll
+C:\Users\stevesparks\source\repos\BlackJackServer\BlackJackServer\bin\Debug\net6.0\wwwroot\img\99-997123_blackjack-casino-logo.png
