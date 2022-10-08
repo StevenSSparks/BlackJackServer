@@ -12,7 +12,7 @@
     <RepositoryType>git</RepositoryType>
     <Company>Steven S. Sparks</Company>
     <Description>API for playing backjack and sample client to use the API</Description>
-    <AssemblyVersion>0.0.1 beta</AssemblyVersion>
+    <AssemblyVersion>0.0.1.0</AssemblyVersion>
   </PropertyGroup>
 
   <ItemGroup>
