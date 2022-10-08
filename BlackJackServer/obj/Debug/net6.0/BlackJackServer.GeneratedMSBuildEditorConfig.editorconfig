@@ -15,8 +15,8 @@ build_property.GenerateRazorMetadataSourceChecksumAttributes =
 build_property.MSBuildProjectDirectory = C:\Users\stevesparks\source\repos\BlackJackServer\BlackJackServer
 build_property._RazorSourceGeneratorDebug = 
 
-[C:/Users/stevesparks/source/repos/BlackJackServer/BlackJackServer/Views/PlayBlackJack/play.cshtml]
-build_metadata.AdditionalFiles.TargetPath = Vmlld3NcUGxheUJsYWNrSmFja1xwbGF5LmNzaHRtbA==
+[C:/Users/stevesparks/source/repos/BlackJackServer/BlackJackServer/Views/PlayBlackJack/Play.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcUGxheUJsYWNrSmFja1xQbGF5LmNzaHRtbA==
 build_metadata.AdditionalFiles.CssScope = 
 
 [C:/Users/stevesparks/source/repos/BlackJackServer/BlackJackServer/Views/Welcome/index.cshtml]

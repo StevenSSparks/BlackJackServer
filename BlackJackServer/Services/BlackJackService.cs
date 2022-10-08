@@ -85,11 +85,13 @@ namespace BlackJackServer.Services
                 "Deck is 52 cards w/o Jokers.",
                 "The deck will shuffle when the last card is used.",
                 "House draws on 16 or less and stands on 17.",
-                "Insurance requires enough points for equal bets.",
+                "Insurance requires enough points for equal bets. Insurance costs 100%",
+                "Insurance is betting aginst the dealer having Blackback. (see below)",
                 "Double requires enough points remaining to double.",
                 //"Splits and Insurance require enough points for equal bets",
                 //"Splits are allowed when player gets on any card of same value.",
                 "BlackJack pays 3 x points. (Bet 100 win 300)",
+                "BlackJack is an ACE and a FACE Card. A 10 is not a face card.",
                 "The player receives 10000 points. Each new play session.",
                 "Minimum Best is 100 points.",
                 "Beat the house when the player exceeds 50000 points.",
@@ -303,6 +305,13 @@ namespace BlackJackServer.Services
                 return game;
             }
 
+            if (game.PlayerCards.Count > 2)
+            {
+                game.Messages.Add("You can not double once you have taken any cards.");
+                return game;
+            }
+
+
             game.PlayerCardsBet = game.PlayerCardsBet + bet;
             game.PlayerPoints = game.PlayerPoints - bet;
 
@@ -469,7 +478,7 @@ namespace BlackJackServer.Services
             if (cards[0].Name.Contains("10") || cards[1].Name.Contains("10")) return false; // can't be a 10
 
             // Player has 2 cards, Totals 21 and one of them is not a 10
-            // So we have an ACE and a FACE CARD = BLACJACK
+            // So we have an ACE and a FACE CARD = BLACkJACK
 
             return true;
         }
@@ -675,13 +684,8 @@ namespace BlackJackServer.Services
                 commandList.Add("HIT");
                 commandList.Add("STAND");
                 commandList.Add("RESET");
-                commandList.Add("DOUBLE");
+                 if (game.PlayerCards.Count < 3) commandList.Add("DOUBLE");
 
-                //if (game.PlayerCards.Count == 2)
-                //{
-                //    if (game.PlayerCards[0].Value == game.PlayerCards[1].Value)
-                //        commandList.Add("SPLIT");
-                //}
 
                 if (game.PlayerHasInsurange == true)    
                 {
