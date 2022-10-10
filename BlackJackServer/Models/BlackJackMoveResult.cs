@@ -17,7 +17,8 @@
         public bool PlayerCardsActive { get; set; } = false;
         public bool PlayerSplitActive { get; set; } = false;
         public bool PlayerHasInsurance { get; set; } = false;
-        public string ComamndList { get; set; } = string.Empty;
+        public string ComamndString { get; set; } = string.Empty;
+        public List<string> CommandList { get; set; } = new();
         public List<string> Message { get; set; } = new();
     }
 }

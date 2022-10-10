@@ -22,35 +22,28 @@
 <div>
     @if (Model.PlayerCards.Count > 0)
     {
-            <br>
-            <table>
-                <thead>
-                    <th COLSPAN="2" > House Cards Total: @Model.ComputerCardTotal </th>
-                </thead>
-                <tbody>
-                    <tr>
-                        @foreach (Card c in Model.ComputerCards) 
-                        {
-                            <td><img width="80" src="~/img/cards/@(c.Name.Replace(" ", "_").ToLower()).png" /></td>
-                        }
-                    </tr>
-                </tbody>
-            </table>
-            <br/>
+        <p>House Cards Total: @Model.ComputerCardTotal</p> <br/>
+        @foreach (Card c in Model.ComputerCards)
+        {
+            if (c.Name.Contains("Face"))
+            {
+                <img style="width:16%" src="~/img/cards/@(c.Name.Replace(" ", "_").ToLower()).png" />
+            }
+            else
+            {
+                  <img style="width:15%" src="~/img/cards/@(c.Name.Replace(" ", "_").ToLower()).png" />
+            }
+           
+        }
+    }
+        <br/>
 
-            <table>
-                 <thead>
-                    <th COLSPAN="2" > Player Cards, Total: @Model.PlayerCardTotal</th>
-                </thead>
-                <tbody>
-                    <tr>
-                        @foreach (Card c in Model.PlayerCards)
-                        {
-                            <td><img width="80" src="~/img/cards/@(c.Name.Replace(" ", "_").ToLower()).png" /></td>
-                        }
-                    </tr>
-                </tbody>
-            </table>
+        <p>Player Cards, Total: @Model.PlayerCardTotal</p><br/>
+            @foreach (Card c in Model.PlayerCards)
+            {
+            <img style="width:15%" src="~/img/cards/@(c.Name.Replace(" ", "_").ToLower()).png" />
+            }
+        <br />
      }
 </div>
 
@@ -64,7 +57,7 @@
 </div>
 
 <div>
-    <p style="font-size:small">Possible Commands are @Model.ComamndList</p>
+    <p style="font-size:small">Possible Commands are @Model.ComamndString</p>
     <form name="commandprocessor" action="/game/play/@Model.GameId" method="Post">
         <p style="font-size:small">Enter Command: <input name="command" type="text" autofocus autocomplete="on" /></p>
     </form>

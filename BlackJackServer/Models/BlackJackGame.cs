@@ -25,7 +25,8 @@
         public string Command { get; set; } = string.Empty;
         public string Modifier { get; set; } = string.Empty;
         public bool GameActive { get; set; } = false;   
-        public string CommandList { get; set;} = string.Empty;
+        public string CommandString { get; set;} = string.Empty;
+        public List<string> CommandList { get; set; } = new();
         public List<string> Messages { get; set; } = new();
  
     }

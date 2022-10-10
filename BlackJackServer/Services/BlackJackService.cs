@@ -190,8 +190,9 @@ namespace BlackJackServer.Services
                 }
             }
 
-            game.CommandList = CommandList(game);
-            bmr.ComamndList = game.CommandList;
+            (game.CommandList, game.CommandString) = CommandList(game);
+            bmr.ComamndString = game.CommandString;
+            bmr.CommandList = game.CommandList;
             bmr.Message = game.Messages;
 
             return bmr;
@@ -657,7 +658,7 @@ namespace BlackJackServer.Services
 
         }
 
-        private string CommandList(BlackJackGame game)
+        private static Tuple<List<string>, string> CommandList(BlackJackGame game)
         {
             var commandList = new List<string>();
 
@@ -714,7 +715,7 @@ namespace BlackJackServer.Services
                 x++;
             }
 
-            return commands;
+            return new Tuple<List<string>,string>(commandList,commands);
         }
 
         private static List<Card> ComputerCardsList(BlackJackGame game)
