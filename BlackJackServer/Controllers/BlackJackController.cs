@@ -38,9 +38,9 @@ namespace BlackJackServer.Controllers
         [EnableCors("CORSPolicy")]
         [Route("/api/BlackJack/Play")]
         [HttpPost]
-        public BlackJackMoveResult PlayBlackJack([FromBody] GameMove move)
+        public BlackJackMoveResult PlayBlackJack(GameMove gm)
         {
-            return _blackjackgame.PlayBlackJack(move);
+            return _blackjackgame.PlayBlackJack(gm);
         }
 
 
