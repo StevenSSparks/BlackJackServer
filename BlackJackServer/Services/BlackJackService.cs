@@ -519,7 +519,7 @@ namespace BlackJackServer.Services
 
             if (HasBlackJack(game.PlayerCards))
             {
-                int winnings = game.PlayerWins * 3;
+                int winnings = game.PlayerCardsBet * 3;
                 game.PlayerPoints = game.PlayerPoints + winnings;
                 game.Messages.Add($"BlackJack! {winnings} added to player points!");
                 
@@ -532,7 +532,7 @@ namespace BlackJackServer.Services
 
             if (game.PlayerSplitActive = true && HasBlackJack(game.PlayerSplitCards))
             {
-                int winnings = game.PlayerWins * 3;
+                int winnings = game.PlayerCardsBet * 3;
                 game.PlayerPoints = game.PlayerPoints + winnings;
                 game.Messages.Add($"BlackJack! Points Payout of {winnings} added to player points!");
             }
