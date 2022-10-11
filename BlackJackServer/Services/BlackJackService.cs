@@ -518,8 +518,11 @@ namespace BlackJackServer.Services
             }
 
             if (HasBlackJack(game.PlayerCards))
-            { game.PlayerPoints = game.PlayerPoints + (game.PlayerCardsBet * 3);
-                game.Messages.Add($"BlackJack! Points Payout of {game.PlayerCardsBet * 3} added to player points!");
+            {
+                int winnings = game.PlayerWins * 3;
+                game.PlayerPoints = game.PlayerPoints + winnings;
+                game.Messages.Add($"BlackJack! {winnings} added to player points!");
+                
             }
             else
             {
@@ -529,8 +532,9 @@ namespace BlackJackServer.Services
 
             if (game.PlayerSplitActive = true && HasBlackJack(game.PlayerSplitCards))
             {
-                game.PlayerPoints = game.PlayerPoints + (game.PlayerSplitBet * 3);
-                game.Messages.Add($"BlackJack! Points Payout of {game.PlayerSplitBet * 3} added to player points!");
+                int winnings = game.PlayerWins * 3;
+                game.PlayerPoints = game.PlayerPoints + winnings;
+                game.Messages.Add($"BlackJack! Points Payout of {winnings} added to player points!");
             }
             else
             {
@@ -697,7 +701,7 @@ namespace BlackJackServer.Services
             }
             else
             {
-                if (game.ComputerWins == 0 || game.PlayerWins == 0)
+                if (game.PlayerPoints > 0)
                 {
                     commandList.Add("BET");
                 }
