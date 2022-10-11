@@ -27,11 +27,11 @@
         {
             if (c.Name.Contains("Face"))
             {
-                <img style="width:16%" src="~/img/cards/@(c.Name.Replace(" ", "_").ToLower()).png" />
+                <img style="width:16%; Padding: 4px; max-width: 100px" src="~/img/cards/@(c.Name.Replace(" ", "_").ToLower()).png" />
             }
             else
             {
-                  <img style="width:15%" src="~/img/cards/@(c.Name.Replace(" ", "_").ToLower()).png" />
+                <img style="width:15%; Padding: 4px; max-width: 100px" src="~/img/cards/@(c.Name.Replace(" ", "_").ToLower()).png" />
             }
            
         }
@@ -41,7 +41,7 @@
         <p>Player Cards, Total: @Model.PlayerCardTotal</p><br/>
             @foreach (Card c in Model.PlayerCards)
             {
-            <img style="width:15%" src="~/img/cards/@(c.Name.Replace(" ", "_").ToLower()).png" />
+            <img style="width:15%; Padding: 4px; max-width: 100px" src="~/img/cards/@(c.Name.Replace(" ", "_").ToLower()).png" />
             }
         <br />
      }
